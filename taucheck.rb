@@ -40,11 +40,12 @@ class Checker
   end
 
   def handle_post(post)
-    puts post["post_url"]
-    @discord.send_message(@channel_id, post["post_url"])
+    body = post["summary"] + "\n" + post["post_url"]
+    puts body
+    @discord.send_message(@channel_id, body)
   end
 end
 
-config = YAML.load_file("config.yml")
+config = YAML.load_file(ARGV[0] || "config.yml")
 checker = Checker.new(config)
 checker.run
